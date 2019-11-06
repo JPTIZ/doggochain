@@ -1,4 +1,5 @@
 # Project configs
+LATEXARGS := -interaction nonstopmode
 
 # Compiler configs
 ifndef LATEX
@@ -24,13 +25,13 @@ all: $(TARGETS)
 $(BRIEF).pdf: $(BRIEF).tex $(BIBREF)
 
 %.pdf: %.tex $(BIBREF)
-	$(LATEX) --shell-escape $(basename $@)
+	$(LATEX) --shell-escape ${LATEXARGS} $(basename $@)
 ifdef BIBREF
 	$(BIBTEX) $(basename $@)
-	$(LATEX) --shell-escape $(basename $@)
-	$(LATEX) --shell-escape $(basename $@)
+	$(LATEX) --shell-escape ${LATEXARGS} $(basename $@)
+	$(LATEX) --shell-escape ${LATEXARGS} $(basename $@)
 endif
-	$(LATEX) --shell-escape $(basename $@)
+	$(LATEX) --shell-escape ${LATEXARGS} $(basename $@)
 
 clean:
 	rm -f *.{aux,bbl,blg,log,nav,snm,out,toc}

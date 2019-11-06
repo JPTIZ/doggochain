@@ -1,5 +1,7 @@
 \documentclass{article}
 
+\usepackage{soul}
+
 \title{Doggochain --- A doggo game blockchain}
 \author{%
     Guilherme Christopher Michaelsen Cardoso (14100831) \\
@@ -40,5 +42,32 @@
 
     \subsection{Functional}
 
-    \subsection{Nonfunctional}
+    The system must:
+
+    \begin{enumerate}
+        \item Allow users to register themselves as players;
+        \item Allow players to find, catch and own a \st{Pokémon} monster;
+        \item Allow players to trade monsters between themselves if they aggree
+              so;
+        \item Allow players to train and evolve their monsters;
+        \item Allow players to challenge each other with their monsters;
+        \item Allow players to bet on which monster will win in a challenge.
+        \item Allow players to set their monsters to \st{kill} friendly defeat
+              wild monsters for experience points;
+        \item Allow players to breed their monsters in order to \textit{mine}
+              for new (and hopefully better) monsters;
+        \item Allow users to know a monster's stats;
+    \end{enumerate}
+
+    \subsection{Non-functional}
+
+    \begin{enumerate}
+        \item Monsters will evolve (increase their stats) once they reach a
+              certain value of experience points (which will also increase upon
+              evolving);
+        \item Challenges' results must sound fair (according to later decided
+              criteria from this project's authors);
+        \item Trading must be done offering monster (and/or money) for monster
+              (and/or money).
+    \end{enumerate}
 \end{document}
