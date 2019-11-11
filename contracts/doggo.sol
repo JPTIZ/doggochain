@@ -1,7 +1,6 @@
 pragma solidity ^0.5;
 
 
-
 contract DoggoChain {
     enum Gender {M,F}
 
@@ -10,12 +9,12 @@ contract DoggoChain {
         string name;
         int hp;
         int level;
-    
+
         // For breeding
         Gender gender;
 
         // for simplicity sake, no Natures
-        
+
         // Base stats. Depend on the Doggo species
         int baseAttack;
         int baseDefense;
@@ -37,13 +36,18 @@ contract DoggoChain {
         int specialAttackIv;
         int specialDefenseIv;
         int speedIv;
-        
-        
+    }
+
+    // Because Solidity has no struct copy from memory to storage, so manual
+    // array implementation is needed.
+    struct DoggoList {
+        mapping (uint32 => Doggo) data;
+        uint32 length;
     }
 
     struct Player {
         string name;
-        Doggo[] doggos;
+        DoggoList doggos;
     }
 
     // Because I refuse to accept the fact that mappings don't have a "hasKey"
@@ -54,7 +58,7 @@ contract DoggoChain {
         bool exists;
     }
 
-    mapping (address => OptionalPlayer) public players;
+    mapping (address => OptionalPlayer) players;
 
     function registerPlayer(address _address, string memory _name) public {
         OptionalPlayer storage player = players[_address];
@@ -64,7 +68,7 @@ contract DoggoChain {
         players[_address] = OptionalPlayer({
             player: Player({
                 name: _name,
-                doggos: new Doggo[]
+                doggos: DoggoList({length: 0})
             }),
             exists: true
         });
