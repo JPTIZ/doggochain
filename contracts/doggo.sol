@@ -1,15 +1,44 @@
 pragma solidity ^0.5;
 
 
+
 contract DoggoChain {
+    enum Gender {M,F}
+
     struct Doggo {
+        string nickname;
         string name;
         int hp;
-        int strength;
-        int magic;
-        int vitality;
-        int agility;
-        int luck;
+        int level;
+    
+        // For breeding
+        Gender gender;
+
+        // for simplicity sake, no Natures
+        
+        // Base stats. Depend on the Doggo species
+        int baseAttack;
+        int baseDefense;
+        int baseSpecialAttack;
+        int baseSpecialDefense;
+        int baseSpeed;
+
+        // Effort Values. Max 255 per stat
+        int attackEv;
+        int defenseEv;
+        int specialAttackEv;
+        int specialDefenseEv;
+        int speedEv;
+
+        // Individual values. Differentiate stats
+        // between doggos of the same species.
+        int attackIv;
+        int defenseIv;
+        int specialAttackIv;
+        int specialDefenseIv;
+        int speedIv;
+        
+        
     }
 
     struct Player {
