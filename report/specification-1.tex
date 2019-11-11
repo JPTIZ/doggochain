@@ -1,0 +1,90 @@
+\documentclass{article}
+
+\usepackage{soul}
+
+\title{Doggochain --- A doggo game blockchain}
+\author{%
+    Guilherme Christopher Michaelsen Cardoso (14100831) \\
+    João Paulo Taylor Ienczak Zanette (14200743)
+}
+
+\begin{document}
+    \maketitle
+
+    \section{Idea}
+
+    The Doggochain project is a game in which players may own and pet monsters,
+    which will have their own \textit{stats} (values that characterize monsters
+    with respect to their strength or vitality, for example), and interact with
+    wild and other players' monsters, including collect, pet, feed, train and
+    even trade.
+
+    \section{Motivation}
+
+    This idea was inspired by two games. One of them is CryptoKitties, an
+    online game where you can buy and sell digital cats using ethereum, and
+    breed them to create new cats. The game however is very simple and lacks
+    much excitement other than the idea of obtaining rare combinations.
+
+    The other game is Pokémon, a largely succesful game about capturing,
+    training, breeding, and battling with pet-like monsters that aid the player
+    in their adventures.
+
+    By combining the two ideas, this project aims to create a blockchain-based
+    RPG where the player is able to capture, train, and compete with their
+    monsters, but also trade with other players, be it exchanges of monsters
+    for other monsters, or for cryptocurrency.
+
+    \section{Justification}
+
+    Since our group was looking for some ludic, non-currency related
+    blockchain-based smart contract system, we decided then to create a more
+    featureful monster game focusing in being an actual game with richer
+    features.
+
+    The use of Blockchain and Smart Contracts, aside being previously required
+    for this project, are technologies currently being explored, but most
+    usages aims for currency and just a few aims for games, leaving room for
+    this work to explore and later report its results.
+
+    In the case of our game, it would allow to estabilish real ownership over
+    your monsters, allowing you to buy, sell, and directly trade with other
+    players.  Each monster will have it's own randomly generated base
+    attributes. By breeding them with other compatible monsters, it is possible
+    to pass good attributes over to the next generation, thus increasing the
+    potential power of the monster, and it's market value.
+
+    \section{Requirements}
+
+    \subsection{Functional}
+
+    The system must:
+
+    \begin{enumerate}
+        \item Allow users to register themselves as players;
+        \item Allow players to find, catch and own a monster;
+        \item Allow players to trade monsters between themselves if they aggree
+            so;
+        \item Allow players to train and evolve their monsters;
+        \item Allow players to challenge each other with their monsters;
+        \item Allow players to bet on which monster will win in a challenge.
+        \item Allow players to set their monsters to friendly defeat wild
+            monsters for experience points;
+        \item Allow players to breed their monsters in order to \textit{mine}
+            for new (and hopefully better) monsters;
+        \item Allow users to know a monster's stats;
+    \end{enumerate}
+
+    \subsection{Non-functional}
+
+    \begin{enumerate}
+        \item Monsters will evolve (increase their stats) once they reach a
+            certain value of experience points (which will also increase upon
+            evolving);
+        \item Challenges' results must sound fair (according to later decided
+            criteria from this project's authors);
+        \item Trading must be done with monster (and/or money) for monster
+            (and/or money), obligatory having one monster as an offer or as a
+            request.
+    \end{enumerate}
+\end{document}
