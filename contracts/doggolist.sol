@@ -13,6 +13,10 @@ contract DoggoList {
         length += 1;
     }
 
+    function isEmpty() public view returns (bool) {
+        return length == 0;
+    }
+
     constructor() public {
         length = 0;
     }
