@@ -19,6 +19,11 @@ contract DoggoChain {
 
     mapping (address => OptionalPlayer) players;
 
+
+
+    // TODO: Add `modifier`s for "sender must be <first param>". Or check how solidity deals with it.
+
+
     function registerPlayer(address _address, string memory _name) public {
         OptionalPlayer storage player = players[_address];
 
@@ -31,5 +36,25 @@ contract DoggoChain {
             }),
             exists: true
         });
+    }
+
+    function challenge(address challenger, address target) public {
+        // TODO: Implement challenging rules
+    }
+
+    function breed(Doggo _this, Doggo _with) public {
+        // TODO: Implement breeding rules
+    }
+
+    function trade(address _requester, address _to, string memory _doggo_name) public {
+        // TODO: Implement trading rules
+    }
+
+
+    /**
+     * Makes _requester hunts for monsters in the wild with his given `_doggo`.
+     */
+    function hunt(address _requester, string memory _doggo) public {
+        // TODO: Implement hunting rules
     }
 }
