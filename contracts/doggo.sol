@@ -3,39 +3,75 @@ pragma solidity ^0.5.2;
 contract Doggo {
     enum Gender {M,F}
 
-    string public nickname;
-    string public name;
-    int public hp;
-    int public level;
+    string internal _nickname;
+    string internal _name;
+    int internal _hp;
+    int internal _level;
 
     // For breeding
-    Gender public gender;
+    Gender internal _gender;
 
     // for simplicity sake, no Natures
 
     // Base stats. Depend on the Doggo species
-    int public baseAttack;
-    int public baseDefense;
-    int public baseSpecialAttack;
-    int public baseSpecialDefense;
-    int public baseSpeed;
+    int private _baseAttack;
+    int private _baseDefense;
+    int private _baseSpecialAttack;
+    int private _baseSpecialDefense;
+    int private _baseSpeed;
 
     // Effort Values. Max 255 per stat
-    int public attackEv;
-    int public defenseEv;
-    int public specialAttackEv;
-    int public specialDefenseEv;
-    int public speedEv;
+    int private _attackEv;
+    int private _defenseEv;
+    int private _specialAttackEv;
+    int private _specialDefenseEv;
+    int private _speedEv;
 
     // Individual values. Differentiate stats
     // between doggos of the same species.
-    int public attackIv;
-    int public defenseIv;
-    int public specialAttackIv;
-    int public specialDefenseIv;
-    int public speedIv;
+    int private _attackIv;
+    int private _defenseIv;
+    int private _specialAttackIv;
+    int private _specialDefenseIv;
+    int private _speedIv;
 
     constructor() public {
         // TODO
+    }
+
+    function levelUp() internal {
+        // TODO
+    }
+
+    function acquireExperience(int _amount) internal {
+        // TODO
+    }
+
+    function maxHp() public view returns(int) {
+        return _hp;
+    }
+
+    function level() public view returns(int) {
+        return _level;
+    }
+
+    function attack() public view returns(int) {
+        return _baseAttack; // TODO
+    }
+
+    function defense() public view returns(int) {
+        return _baseDefense; // TODO
+    }
+
+    function spAttack() public view returns(int) {
+        return _baseSpecialAttack; // TODO
+    }
+
+    function spDefense() public view returns(int) {
+        return _baseSpecialDefense; // TODO
+    }
+
+    function speed() public view returns(int) {
+        return _baseSpeed; // TODO
     }
 }
