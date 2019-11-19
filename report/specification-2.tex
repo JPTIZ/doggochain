@@ -1,0 +1,90 @@
+\documentclass{article}
+
+\usepackage{cleveref}
+\usepackage{relsize}
+
+\title{%
+    Doggochain --- A doggo game blockchain \\
+    [0.5em]
+    \smaller{2nd report}
+}
+\author{%
+    Guilherme Christopher Michaelsen Cardoso (14100831) \\
+    João Paulo Taylor Ienczak Zanette (14200743)
+}
+
+\begin{document}
+    \maketitle
+
+    \section{Contracts structure}
+
+    This section will only describe contracts briefly just to clarify
+    \textbf{what} they are (i.e.\ their role in the system). Further
+    explanations of \textbf{how} they behave will be cleared
+    in~\Cref{sec:function-desc}.
+
+    In short, the contracts directly related to Doggochain are structured as
+    follows:
+
+    \begin{description}
+        \item[DoggoChain:] The main contract, hence responsible for managing
+            database in respect of Players and Doggos, as well as the
+            smart-contract's operations (player challenging, hunting, breeding,
+            etc.). Abstracts player's data as an internal \texttt{struct},
+            since there's no much use for it outside this contract\footnote{%
+                The reason is that the \texttt{Player} structure is needed only
+                for players to own their Doggos and mark their existence in the
+                block-chain (i.e.\ in the game). Every other operation is done
+                considering Doggo-to-Doggo interactions.
+            }.
+        \item[Doggo:] Works as a simple structure for every Doggo's stats,
+            providing an interface that abstract how Doggos evolve (as in stat
+            gaining) and what's their real current stats.
+        \item[UsageTest:] A unit test to check if the system works properly
+            from the point of view of who's going to \textit{use} the API\@.
+    \end{description}
+
+    Other implementation-specific contracts are designed to compensate some
+    lack of features from Solidity 0.5, e.g.\ no proper dynamic array handling
+    in storage data. Currently these contracts are:
+
+    \begin{description}
+        \item[DoggoList:] A simple list data structure implementation,
+            simulated using a mapping from \texttt{uint32} to \texttt{Doggo}
+            (since there's no generics in Solidity, this implementation must be
+            replicated for every different type) and a \texttt{length} variable
+            for element counting.
+        \item[OptionalPlayer:] Actually not a contract itself, but a structure.
+            Used to compensate the lack of Optional type\footnote{%
+                An ``Optional'' is a type that handles existence/inexistence of
+                data (without the security/usage issues of using
+                \texttt{null}-like value).
+            } in Solidity. Needed since Solidity mappings assume \textit{all}
+            possible keys actually exist and maps to some value (meaning no
+            \texttt{hasKey}-related checking), and it does not belong directly
+            to \texttt{Player} structure since existence itself is not a
+            player's property, but rather is a mapping's constraint.
+    \end{description}
+
+    Apart from that, there are libraries for the more complex operations, so
+    the amount of responsibility in DoggoChain contract's code becomes reduced:
+
+    \begin{description}
+        \item[Battle:] For battle simulation. Its only public function is
+            \texttt{simulate}, which gives a simulated battle's results.
+        \item[Breed:] For breeding operations. Its only public function is
+            \texttt{breed}, which gives result containing the (possibly)
+            generated Doggo and if the breeding was a success.
+    \end{description}
+
+
+    \section{Function details\label{sec:function-desc}}
+
+    This section will be splitted in a subsection for each \textbf{main
+    contract and libraries}, since other contracts are merely for
+    implementation details.
+
+    \subsection{DoggoChain}
+
+
+\end{document}
