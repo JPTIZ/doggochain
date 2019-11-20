@@ -17,6 +17,11 @@ contract DoggoList {
         length += 1;
     }
 
+    function pop() public returns (Doggo){
+        length -= 1;
+        return data[length + 1];
+    }
+
     function isEmpty() public view returns (bool) {
         return length == 0;
     }

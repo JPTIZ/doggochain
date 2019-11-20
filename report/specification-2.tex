@@ -85,6 +85,32 @@
     implementation details.
 
     \subsection{DoggoChain}
+    \begin{description}
+        \item[registerPlayer(string name):] Registers a player in the blockchain, making
+        sure the player hasn't been previously registered, and initializes
+        their list of Doggos.
+        \item[challenge(address target):] Implements the rules for challenging a player
+        for a Player versus Player battle.
+        \item[breed(Doggo this, Doggo with):] This function implements the rules
+        for breeding two Doggos and spawning a new Doggo. The baby will have a 
+        combination of the hidden attributes of both parents.
+        \item[Trade(address to, string doggo\_name):] Implements the rules for 
+        trading a Doggo with a specific player. 
+        \item[Hunt(doggo):] Implements the rules for capturing a wild Doggo and
+        adding it to the player's collection.
+        \item[player(address addr):] Retruns the name of the player, and their
+        list of doggos.
+        \item[totalPlayers():] Returns the number of registered players in the 
+        blockchain.      
+    \end{description}
 
-
+    \subsection{DoggoList}
+    This is a simple contract that implements a manual array implementation,
+    which is necessary because Solidity doesn't implement struct copy from
+    memory to storage. 
+    \begin{description}
+        \item[push(Doggo doggo):] Inserts a doggo to the end of the list.
+        \item[pop():] Removes and returns the last doggo in the list. 
+        \item[isEmpty():] Returns true if the list is empty. 
+    \end{description}
 \end{document}
