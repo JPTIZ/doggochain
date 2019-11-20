@@ -135,10 +135,11 @@
     Aside from the \texttt{DoggoChain} contract (which uses this contract just
     for storing purposes), some code units such as libraries (e.g.\
     \texttt{Battle}) will make extensive use of the \texttt{Doggo} contract's
-    functions. For an example: during simulation in a battle between two
-    Doggos, called ``first'' and ``second'' for reference, the library may want
-    to calculate the results of an physical attack action from ``first'' to
-    ``second''. This can be achieved by doing the following:
+    functions. To understand how was it modelled, let's see this example:
+    during simulation in a battle between two Doggos, called ``first'' and
+    ``second'' for reference, the library may want to calculate the results of
+    an physical attack action from ``first'' to ``second''. This can be
+    achieved by doing the following:
 
     \begin{enumerate}
         \item The library calls \texttt{first.attack()} and holds its result;
@@ -146,14 +147,25 @@
             its result;
         \item Since the attack and defense values means, respectively, how much
             physical offensive and defensive power a Doggo has, the library can
-            use a formula based to calculate a damage value, i.e.\ how much
-            ``second'' will suffer with ``first''s attack.
+            use a formula based on them to calculate a damage value, i.e.\ how
+            much ``second'' will suffer with ``first''s attack.
         \item With that damage value calculated, the library will then apply
             that damage into ``second'' calling its own function
             \texttt{damage(target, amount)}, passing \texttt{second} as
-            argument \texttt{target} and the damage value for \texttt{amount}.
-        \item \texttt{damage(...)} will, then, decrease the current health
-            points (``HP'' for short), i.e.\ how much that doggo can still keep
-            up with the battle.
+            argument to \texttt{target} and the damage value for
+            \texttt{amount}.
+        \item \texttt{damage(...)} will then decrease the current health points
+            (``HP'' for short), i.e.\ how much that doggo can still keep up
+            with the battle, which is controlled outside ``Doggo'' contract
+            using a separate struct \texttt{Battler} that holds both the
+            ``Doggo'' and its current health. This way, battle can be handled
+            without ever changing the contract's storage (except when applying
+            battle simulation results's side-effects, e.g.\ giving a Doggo its
+            experience points --- potentially leveling him up).
     \end{enumerate}
+
+    That should illustrate the idea of this contract's modelling: do as few
+    writes as possible to the storage (leaving it only for more ``permanent''
+    data) and let the more complex operations built atop the view-only
+    functions.
 \end{document}
