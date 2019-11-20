@@ -85,6 +85,7 @@
     implementation details.
 
     \subsection{DoggoChain}
+
     \begin{description}
         \item[registerPlayer(string name):] Registers a player in the
             blockchain, making sure the player hasn't been previously
@@ -94,9 +95,9 @@
         \item[breed(Doggo this, Doggo with):] This function implements the
             rules for breeding two Doggos and spawning a new Doggo. The baby
             will have a combination of the hidden attributes of both parents.
-        \item[Trade(address to, string doggo\_name):] Implements the rules for
+        \item[trade(address to, string doggo\_name):] Implements the rules for
             trading a Doggo with a specific player.
-        \item[Hunt(doggo):] Implements the rules for capturing a wild Doggo and
+        \item[hunt(doggo):] Implements the rules for capturing a wild Doggo and
             adding it to the player's collection.
         \item[player(address addr):] Retruns the name of the player, and their
             list of doggos.
@@ -104,13 +105,55 @@
             blockchain.
     \end{description}
 
+    So to use any of the game's features, all the player have to do is to call
+    each function from this contract. Each function will require that the
+    player is correctly registered and will detect that using the
+    \texttt{msg.sender} property as player's address.
+
+    For the \texttt{challenge}, \texttt{trade}, \texttt{breed} and
+    \texttt{hunt}, the player will be informed of the \textbf{results} of that
+    operation via function return data, with computations updating the storage
+    internally. Since they're related to complex actions, some of their
+    responsibilities are splitted into other libraries (e.g.\ \texttt{Battle}
+    and \texttt{Breed}), so these functions will just call the libraries' ones,
+    get the results and take decisions based on them.
+
     \subsection{DoggoList}
+
     This is a simple contract that implements a manual array implementation,
     which is necessary because Solidity doesn't implement struct copy from
     memory to storage.
+
     \begin{description}
         \item[push(Doggo doggo):] Inserts a doggo to the end of the list.
         \item[pop():] Removes and returns the last doggo in the list.
         \item[isEmpty():] Returns true if the list is empty.
     \end{description}
+
+    \subsection{Doggo}
+
+    Aside from the \texttt{DoggoChain} contract (which uses this contract just
+    for storing purposes), some code units such as libraries (e.g.\
+    \texttt{Battle}) will make extensive use of the \texttt{Doggo} contract's
+    functions. For an example: during simulation in a battle between two
+    Doggos, called ``first'' and ``second'' for reference, the library may want
+    to calculate the results of an physical attack action from ``first'' to
+    ``second''. This can be achieved by doing the following:
+
+    \begin{enumerate}
+        \item The library calls \texttt{first.attack()} and holds its result;
+        \item Then, the library calls \texttt{second.defense()} and also holds
+            its result;
+        \item Since the attack and defense values means, respectively, how much
+            physical offensive and defensive power a Doggo has, the library can
+            use a formula based to calculate a damage value, i.e.\ how much
+            ``second'' will suffer with ``first''s attack.
+        \item With that damage value calculated, the library will then apply
+            that damage into ``second'' calling its own function
+            \texttt{damage(target, amount)}, passing \texttt{second} as
+            argument \texttt{target} and the damage value for \texttt{amount}.
+        \item \texttt{damage(...)} will, then, decrease the current health
+            points (``HP'' for short), i.e.\ how much that doggo can still keep
+            up with the battle.
+    \end{enumerate}
 \end{document}
