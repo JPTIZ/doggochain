@@ -1,6 +1,7 @@
 \documentclass{article}
 
 \usepackage{cleveref}
+\usepackage{graphicx}
 \usepackage{relsize}
 
 \title{%
@@ -168,4 +169,35 @@
     writes as possible to the storage (leaving it only for more ``permanent''
     data) and let the more complex operations built atop the view-only
     functions.
+
+    \section{Diagrams}
+
+    For a more top-level visualization of the contracts's
+    schema,~\Cref{fig:class-diagram} shows a Class Diagram for the system as a
+    whole, while~\Cref{fig:registerPlayerSD,fig:simulateSD} shows Sequence
+    Diagrams for the main complex transactions.
+
+    \begin{figure}[h]
+        \centering{}
+        \includegraphics[width=1\textwidth]{example-image-a}
+        \caption{Class Diagram for DoggoChain system.~\label{fig:class-diagram}}
+    \end{figure}
+
+    \begin{figure}[h]
+        \centering{}
+        \includegraphics[width=1\textwidth]{img/DoggoChain - registerPlayer SD}
+        \caption{%
+            Sequence Diagram for \texttt{DoggoChain.registerPlayer}
+            function.~\label{fig:registerPlayerSD}
+        }
+    \end{figure}
+
+    \begin{figure}[h]
+        \centering{}
+        \includegraphics[width=1\textwidth]{img/DoggoChain - simulate SD}
+        \caption{%
+            Sequence Diagram for \texttt{Battle.simulate}
+            function.~\label{fig:simulateSD}
+        }
+    \end{figure}
 \end{document}
