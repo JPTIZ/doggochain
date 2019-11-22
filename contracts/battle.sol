@@ -18,8 +18,7 @@ library Battle {
 
     enum Result {
         Victory,
-        Defeat,
-        Draw
+        Defeat
     }
 
 
