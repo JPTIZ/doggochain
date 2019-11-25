@@ -8,7 +8,10 @@ endif
 BIBTEX := bibtex
 
 # Project rules
+all: specification-1 specification-2
+
 specification-1: specification-1.pdf
+specification-2: specification-2.pdf
 
 # Etc.
 OBJS   := $(wildcard **/*.tex) $(wildcard *.tex)
