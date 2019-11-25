@@ -3,6 +3,14 @@ pragma solidity ^0.5.2;
 contract Doggo {
     enum Gender {M,F}
 
+    struct Stats {
+        int attack;
+        int defense;
+        int specialAttack;
+        int specialDefense;
+        int speed;
+    }
+
     string internal _nickname;
     string internal _name;
     int internal _hp;
@@ -14,26 +22,14 @@ contract Doggo {
     // for simplicity sake, no Natures
 
     // Base stats. Depend on the Doggo species
-    int private _baseAttack;
-    int private _baseDefense;
-    int private _baseSpecialAttack;
-    int private _baseSpecialDefense;
-    int private _baseSpeed;
+    Stats private bases;
 
     // Effort Values. Max 255 per stat
-    int private _attackEv;
-    int private _defenseEv;
-    int private _specialAttackEv;
-    int private _specialDefenseEv;
-    int private _speedEv;
+    Stats private evs;
 
     // Individual values. Differentiate stats between doggos of the same
     // species.
-    int private _attackIv;
-    int private _defenseIv;
-    int private _specialAttackIv;
-    int private _specialDefenseIv;
-    int private _speedIv;
+    Stats private ivs;
 
     constructor(string memory name, string memory nickname) public {
         _nickname = nickname;
