@@ -35,8 +35,9 @@ contract Doggo {
     int private _specialDefenseIv;
     int private _speedIv;
 
-    constructor() public {
-        // TODO
+    constructor(string memory name, string memory nickname) public {
+        _nickname = nickname;
+        _name = name;
     }
 
     function levelUp() internal {
