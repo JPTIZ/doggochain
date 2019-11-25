@@ -27,8 +27,8 @@ contract Doggo {
     int private _specialDefenseEv;
     int private _speedEv;
 
-    // Individual values. Differentiate stats
-    // between doggos of the same species.
+    // Individual values. Differentiate stats between doggos of the same
+    // species.
     int private _attackIv;
     int private _defenseIv;
     int private _specialAttackIv;
