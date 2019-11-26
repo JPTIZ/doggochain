@@ -1,4 +1,4 @@
-pragma solidity ^0.5;
+pragma solidity ^0.5.2;
 
 import {Doggo} from './doggo.sol';
 import {DoggoList} from './doggolist.sol';
