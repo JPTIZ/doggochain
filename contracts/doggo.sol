@@ -1,5 +1,7 @@
 pragma solidity ^0.5.2;
 
+import {Utils} from './utils.sol';
+
 contract Doggo {
     enum Gender {M,F}
 
@@ -13,11 +15,13 @@ contract Doggo {
 
     string internal _nickname;
     string internal _name;
-    int internal _hp;
-    int internal _level;
+    int private _hp;
+    int private _level;
+    int private _currentExp;
+    int private _neededExp;
 
     // For breeding
-    Gender internal _gender;
+    Gender private _gender;
 
     // for simplicity sake, no Natures
 
@@ -34,14 +38,42 @@ contract Doggo {
     constructor(string memory name, string memory nickname) public {
         _nickname = nickname;
         _name = name;
+
+        _neededExp = 100;
     }
 
     function levelUp() internal {
-        // TODO
+        uint8 statToUpgrade = uint8(Utils.random() % 5);
+        uint8 valueGrowth = uint8(Utils.random() % 3) + 1;
+
+        if (statToUpgrade == 0) {
+            evs.attack += valueGrowth;
+        } else if (statToUpgrade == 1) {
+            evs.defense += valueGrowth;
+        } else if (statToUpgrade == 2) {
+            evs.spAttack += valueGrowth;
+        } else if (statToUpgrade == 3) {
+            evs.spDefense += valueGrowth;
+        } else if (statToUpgrade == 4) {
+            evs.speed += valueGrowth;
+        }
+
+        _hp += int(Utils.random() % 5);
+        ++_level;
+
+        uint ulevel = uint(_level);
+        uint level_factor = (uint(115) ** ulevel) / (uint(100) ** ulevel);
+
+        _neededExp = _neededExp * int(level_factor);
     }
 
     function acquireExperience(int _amount) internal {
-        // TODO
+        _currentExp += _amount;
+
+        while (_currentExp > _neededExp) {
+            _currentExp -= _neededExp;
+            levelUp();
+        }
     }
 
     function maxHp() public view returns(int) {
