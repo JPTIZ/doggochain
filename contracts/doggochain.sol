@@ -62,10 +62,15 @@ contract DoggoChain {
     }
 
 
-    function trade(address /* _to */, string memory /* _doggo_name */) public view {
+    function trade(
+        string memory _proposed_doggo,
+        address _to,
+        string memory _for_doggo
+    ) public view {
         address _requester = msg.sender;
 
         _requester;
+
 
         // TODO: Implement trading rules
     }
