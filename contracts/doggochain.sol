@@ -2,6 +2,7 @@ pragma solidity ^0.5;
 
 import {Doggo} from './doggo.sol';
 import {DoggoList} from './doggolist.sol';
+import {Battle} from './battle.sol';
 import {Breeding} from './breed.sol';
 
 contract DoggoChain {
@@ -22,7 +23,8 @@ contract DoggoChain {
     int playerCount;
 
 
-    // TODO: Add `modifier`s for "sender must be <first param>". Or check how solidity deals with it.
+    // TODO: Add `modifier`s for "sender must be <first param>". Or check how
+    // solidity deals with it.
 
     constructor() public {
         playerCount = 0;
@@ -48,12 +50,27 @@ contract DoggoChain {
     }
 
 
-    function challenge(address /* _target */) public view {
+    function challenge(address _target) public returns(Battle.Result) {
         address _challenger = msg.sender;
 
-        _challenger;
+        (, DoggoList challenger_doggos) = player(_challenger);
+        (, DoggoList target_doggos) = player(_target);
 
-        // TODO: Implement challenging rules
+        Doggo challenger_doggo = challenger_doggos.at(0);
+        Doggo target_doggo = target_doggos.at(0);
+
+        Battle.Result result = Battle.simulate(
+            challenger_doggo,
+            target_doggo
+        );
+
+        if (result == Battle.Result.Victory) {
+            challenger_doggo.acquireExperience(target_doggo.expWorth());
+        } else {
+            target_doggo.acquireExperience(challenger_doggo.expWorth());
+        }
+
+        return result;
     }
 
 

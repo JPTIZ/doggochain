@@ -13,8 +13,8 @@ contract Doggo {
         int speed;
     }
 
-    string internal _nickname;
-    string internal _name;
+    string private _nickname;
+    string private _name;
     int private _hp;
     int private _level;
     int private _currentExp;
@@ -42,7 +42,7 @@ contract Doggo {
         _neededExp = 100;
     }
 
-    function levelUp() internal {
+    function levelUp() private {
         uint8 statToUpgrade = uint8(Utils.random() % 5);
         uint8 valueGrowth = uint8(Utils.random() % 3) + 1;
 
@@ -67,7 +67,7 @@ contract Doggo {
         _neededExp = _neededExp * int(level_factor);
     }
 
-    function acquireExperience(int _amount) internal {
+    function acquireExperience(int _amount) public {
         _currentExp += _amount;
 
         while (_currentExp > _neededExp) {
@@ -111,5 +111,17 @@ contract Doggo {
         returns(int)
     {
         return 5 + (_level * (2 * base + iv + ev / 4)) / 100;
+    }
+
+    /**
+     * Calculates how much experience this Doggo should *give* to others when
+     * defeated.
+     */
+    function expWorth() public view
+        returns(int)
+    {
+        return (15 * _level / 10) * (
+            attack() + defense() + spAttack() + spDefense() + speed()
+        ) / 5;
     }
 }

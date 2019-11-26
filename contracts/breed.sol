@@ -16,6 +16,6 @@ library Breeding {
 
         // TODO: Implement breeding process
 
-        return Result({pupper: new Doggo(), success: false});
+        return Result({pupper: new Doggo("Mock", "Mock"), success: false});
     }
 }
