@@ -24,7 +24,22 @@ library Battle {
 
     function simulate(Doggo challenger, Doggo guest) public view returns (Result) {
         BattleData memory data = createBattleData(challenger, guest);
-
+        // if current turn = true then it's the challenger's turn 
+        bool currentTurn = data.challenger.doggo.speed > data.guest.doggo.speed;
+        while(data.challenger.currentHp > 0 && data.guest.currentHp > 0) {
+            if (currentTurn) {
+                int damageDealt = data.challenger.doggo.attack; // TODO: change for the actual damage formula
+                int damageReduction = data.guest.doggo.defense / 10; 
+                int actualDamage = ((damageDealt/damageReduction) * data.challenger.doggo.level) / 50;
+                damage(guest, actualDamage);
+            } else {
+                int damageDealt = data.guest.doggo.attack; // TODO: change for the actual damage formula
+                int damageReduction = data.challenger.doggo.defense / 10; 
+                int actualDamage = ((damageDealt/damageReduction) * data.guest.doggo.level) / 50;
+                damage(challenger, actualDamage);
+            }
+            currentTurn = !currentTurn;
+        }
         // TODO: Implement the whoooole battle simulation
         data;
     }
