@@ -3,6 +3,14 @@ pragma solidity ^0.5.2;
 contract Doggo {
     enum Gender {M,F}
 
+    struct Stats {
+        int attack;
+        int defense;
+        int spAttack;
+        int spDefense;
+        int speed;
+    }
+
     string internal _nickname;
     string internal _name;
     int internal _hp;
@@ -14,29 +22,18 @@ contract Doggo {
     // for simplicity sake, no Natures
 
     // Base stats. Depend on the Doggo species
-    int private _baseAttack;
-    int private _baseDefense;
-    int private _baseSpecialAttack;
-    int private _baseSpecialDefense;
-    int private _baseSpeed;
+    Stats private bases;
 
     // Effort Values. Max 255 per stat
-    int private _attackEv;
-    int private _defenseEv;
-    int private _specialAttackEv;
-    int private _specialDefenseEv;
-    int private _speedEv;
+    Stats private evs;
 
     // Individual values. Differentiate stats between doggos of the same
     // species.
-    int private _attackIv;
-    int private _defenseIv;
-    int private _specialAttackIv;
-    int private _specialDefenseIv;
-    int private _speedIv;
+    Stats private ivs;
 
-    constructor() public {
-        // TODO
+    constructor(string memory name, string memory nickname) public {
+        _nickname = nickname;
+        _name = name;
     }
 
     function levelUp() internal {
@@ -56,22 +53,31 @@ contract Doggo {
     }
 
     function attack() public view returns(int) {
-        return _baseAttack; // TODO
+        return attrValue(bases.attack, evs.attack, ivs.attack);
     }
 
     function defense() public view returns(int) {
-        return _baseDefense; // TODO
+        return attrValue(bases.defense, evs.defense, ivs.defense);
     }
 
     function spAttack() public view returns(int) {
-        return _baseSpecialAttack; // TODO
+        return attrValue(bases.spAttack, evs.spAttack, ivs.spAttack);
     }
 
     function spDefense() public view returns(int) {
-        return _baseSpecialDefense; // TODO
+        return attrValue(bases.spDefense, evs.spDefense, ivs.spDefense);
     }
 
     function speed() public view returns(int) {
-        return _baseSpeed; // TODO
+        return attrValue(bases.speed, evs.speed, ivs.speed);
+    }
+
+    /**
+     * Calculates the true value of an attribute.
+     */
+    function attrValue(int base, int ev, int iv) private view
+        returns(int)
+    {
+        return 5 + (_level * (2 * base + iv + ev / 4)) / 100;
     }
 }
