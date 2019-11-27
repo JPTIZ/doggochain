@@ -22,13 +22,26 @@ contract DoggoList {
         return data[_length + 1];
     }
 
-    function remove(int index) public returns (Doggo) {
+    function removeAt(int index) public returns (Doggo) {
         Doggo doggo = at(index);
         --_length;
         for (int i = index; i < _length; ++i) {
             data[i] = data[i + 1];
         }
         return doggo;
+    }
+
+    /**
+     * Removes specific doggo from list and returns if it it was really there.
+     */
+    function remove(Doggo doggo) public returns(bool) {
+        for (int i = 0; i < _length; ++i) {
+            if (data[i] == doggo) {
+                removeAt(i);
+                return true;
+            }
+        }
+        return false;
     }
 
     function at(int index) public view returns(Doggo) {
