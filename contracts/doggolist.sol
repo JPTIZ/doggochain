@@ -3,7 +3,7 @@ pragma solidity ^0.5.2;
 import {Doggo} from './doggo.sol';
 
 // Because Solidity has no struct copy from memory to storage, so manual
-// array implementation is needed.
+// dynamic array implementation is needed.
 contract DoggoList {
     mapping (int => Doggo) private data;
     int private _length;
@@ -20,6 +20,15 @@ contract DoggoList {
     function pop() public returns (Doggo){
         _length -= 1;
         return data[_length + 1];
+    }
+
+    function remove(int index) public returns (Doggo) {
+        Doggo doggo = at(index);
+        --_length;
+        for (int i = index; i < _length; ++i) {
+            data[i] = data[i + 1];
+        }
+        return doggo;
     }
 
     function at(int index) public view returns(Doggo) {
