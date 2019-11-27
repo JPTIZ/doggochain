@@ -15,13 +15,8 @@ contract Trade {
         Invalidated // When doggo doesn't exist anymore
     }
 
-    struct OptionalDoggo {
-        Doggo get;
-        bool exists;
-    }
-
     struct Proposal {
-        OptionalDoggo doggo;
+        Doggo.Optional doggo;
         uint value;
     }
 
@@ -39,6 +34,7 @@ contract Trade {
         Proposal memory _wanted
     )
         public
+        payable
     {
         require(_offered.doggo.exists || _wanted.doggo.exists);
 
