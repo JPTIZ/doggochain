@@ -40,8 +40,13 @@ library Battle {
             }
             currentTurn = !currentTurn;
         }
-        // TODO: Implement the whoooole battle simulation
-        data;
+        if (isDead(challenger)) {
+            return Result.Defeat;
+        } else { 
+            return Result.Victory;
+            
+        }
+        
     }
 
 
