@@ -37,7 +37,13 @@ library Breeding {
                         : Doggo.Gender.F
                 ),
                 maxStats(_this.bases(), _with.bases()),
-                Doggo.Stats({attack:0,defense:0,spAttack:0,spDefense:0,speed:0}),
+                Doggo.Stats({
+                    attack: 0,
+                    defense: 0,
+                    spAttack: 0,
+                    spDefense: 0,
+                    speed: 0
+                }),
                 maxStats(_this.ivs(), _with.ivs())
             ),
             success: true
