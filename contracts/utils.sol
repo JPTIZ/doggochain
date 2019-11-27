@@ -14,4 +14,12 @@ library Utils {
             uint256(blockhash(block.number - 1))
         )));
     }
+
+    function max(uint a, uint b) public pure returns(uint) {
+        return a > b ? a : b;
+    }
+
+    function max(int a, int b) public pure returns(int) {
+        return a > b ? a : b;
+    }
 }
