@@ -1,5 +1,7 @@
 pragma solidity ^0.5;
 
+pragma experimental ABIEncoderV2;
+
 import {Doggo} from './doggo.sol';
 import {DoggoList} from './doggolist.sol';
 import {Breeding} from './breed.sol';
@@ -57,8 +59,22 @@ contract DoggoChain {
     }
 
 
-    function breed(Doggo /* _this */, Doggo /* _with */) public view {
+    function breed(Doggo _this, Doggo _with, string memory nickname)
+        public
+        payable
+        returns(Breeding.Result memory)
+    {
         // TODO: Implement breeding rules
+        require(
+            msg.value > Breeding.doggoValue(_this),
+            "Needs more money to support the first doggo's power."
+        );
+        require(
+            msg.value > Breeding.doggoValue(_with),
+            "Needs more money to support the second doggo's power."
+        );
+
+        return Breeding.breed(_this, _with, nickname);
     }
 
 

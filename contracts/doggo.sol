@@ -1,5 +1,7 @@
 pragma solidity ^0.5.2;
 
+pragma experimental ABIEncoderV2;
+
 import {Utils} from './utils.sol';
 
 contract Doggo {
@@ -26,14 +28,14 @@ contract Doggo {
     // for simplicity sake, no Natures
 
     // Base stats. Depend on the Doggo species
-    Stats private bases;
+    Stats private _bases;
 
     // Effort Values. Max 255 per stat
-    Stats private evs;
+    Stats private _evs;
 
     // Individual values. Differentiate stats between doggos of the same
     // species.
-    Stats private ivs;
+    Stats private _ivs;
 
     constructor(string memory name, string memory nickname) public {
         _nickname = nickname;
@@ -42,20 +44,45 @@ contract Doggo {
         _neededExp = 100;
     }
 
+    function initialize(
+        int __hp,
+        int __level,
+        int __currentExp,
+        int __neededExp,
+        Gender __gender,
+        Stats memory __bases,
+        Stats memory __evs,
+        Stats memory __ivs
+    )
+        public
+        returns(Doggo)
+    {
+        _hp = __hp;
+        _level = __level;
+        _currentExp = __currentExp;
+        _neededExp = __neededExp;
+        _gender = __gender;
+        _bases = __bases;
+        _evs = __evs;
+        _ivs = __ivs;
+
+        return this;
+    }
+
     function levelUp() internal {
         uint8 statToUpgrade = uint8(Utils.random() % 5);
         uint8 valueGrowth = uint8(Utils.random() % 3) + 1;
 
         if (statToUpgrade == 0) {
-            evs.attack += valueGrowth;
+            _evs.attack += valueGrowth;
         } else if (statToUpgrade == 1) {
-            evs.defense += valueGrowth;
+            _evs.defense += valueGrowth;
         } else if (statToUpgrade == 2) {
-            evs.spAttack += valueGrowth;
+            _evs.spAttack += valueGrowth;
         } else if (statToUpgrade == 3) {
-            evs.spDefense += valueGrowth;
+            _evs.spDefense += valueGrowth;
         } else if (statToUpgrade == 4) {
-            evs.speed += valueGrowth;
+            _evs.speed += valueGrowth;
         }
 
         _hp += int(Utils.random() % 5);
@@ -85,23 +112,35 @@ contract Doggo {
     }
 
     function attack() public view returns(int) {
-        return attrValue(bases.attack, evs.attack, ivs.attack);
+        return attrValue(_bases.attack, _evs.attack, _ivs.attack);
     }
 
     function defense() public view returns(int) {
-        return attrValue(bases.defense, evs.defense, ivs.defense);
+        return attrValue(_bases.defense, _evs.defense, _ivs.defense);
     }
 
     function spAttack() public view returns(int) {
-        return attrValue(bases.spAttack, evs.spAttack, ivs.spAttack);
+        return attrValue(_bases.spAttack, _evs.spAttack, _ivs.spAttack);
     }
 
     function spDefense() public view returns(int) {
-        return attrValue(bases.spDefense, evs.spDefense, ivs.spDefense);
+        return attrValue(_bases.spDefense, _evs.spDefense, _ivs.spDefense);
     }
 
     function speed() public view returns(int) {
-        return attrValue(bases.speed, evs.speed, ivs.speed);
+        return attrValue(_bases.speed, _evs.speed, _ivs.speed);
+    }
+
+    function bases() public view returns(Stats memory) {
+        return _bases;
+    }
+
+    function evs() public view returns(Stats memory) {
+        return _evs;
+    }
+
+    function ivs() public view returns(Stats memory) {
+        return _ivs;
     }
 
     /**
@@ -111,5 +150,21 @@ contract Doggo {
         returns(int)
     {
         return 5 + (_level * (2 * base + iv + ev / 4)) / 100;
+    }
+
+    function neededExpForLevel(int __level)
+        public pure
+        returns(int)
+    {
+        int __neededExp = 100;
+
+        for (int l = 1; l < __level; ++l) {
+            uint ulevel = uint(l);
+            uint level_factor = (uint(115) ** ulevel) / (uint(100) ** ulevel);
+
+            __neededExp = __neededExp * int(level_factor);
+        }
+
+        return __neededExp;
     }
 }
