@@ -5,6 +5,11 @@ import {Utils} from './utils.sol';
 contract Doggo {
     enum Gender {M,F}
 
+    struct Optional {
+        Doggo get;
+        bool exists;
+    }
+
     struct Stats {
         int attack;
         int defense;
