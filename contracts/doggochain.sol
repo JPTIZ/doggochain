@@ -1,9 +1,12 @@
 pragma solidity ^0.5;
 
+pragma experimental ABIEncoderV2;
+
 import {Doggo} from './doggo.sol';
 import {DoggoList} from './doggolist.sol';
 import {Battle} from './battle.sol';
 import {Breeding} from './breed.sol';
+import {Trade} from './trade.sol';
 
 contract DoggoChain {
     struct Player {
@@ -74,17 +77,54 @@ contract DoggoChain {
     }
 
 
-    function breed(Doggo /* _this */, Doggo /* _with */) public view {
+    function breed(Doggo _this, Doggo _with, string memory nickname)
+        public
+        payable
+        returns(Breeding.Result memory)
+    {
         // TODO: Implement breeding rules
+        require(
+            msg.value > Breeding.doggoValue(_this),
+            "Needs more money to support the first doggo's power."
+        );
+        require(
+            msg.value > Breeding.doggoValue(_with),
+            "Needs more money to support the second doggo's power."
+        );
+
+        return Breeding.breed(_this, _with, nickname);
     }
 
 
-    function trade(address /* _to */, string memory /* _doggo_name */) public view {
-        address _requester = msg.sender;
+    function trade(
+        Doggo _proposed_doggo,
+        address payable _to,
+        Doggo _wanted_doggo,
+        uint wanted_money
+    )
+        public
+        payable
+    {
+        address proposer = msg.sender;
 
-        _requester;
-
-        // TODO: Implement trading rules
+        Trade _trade = new Trade(
+            this,
+            _to,
+            Trade.Proposal({
+                doggo: Doggo.Optional({
+                    get: _proposed_doggo,
+                    exists: true
+                }),
+                value: msg.value
+            }),
+            Trade.Proposal({
+                doggo: Doggo.Optional({
+                    get: _wanted_doggo,
+                    exists: true
+                }),
+                value: wanted_money
+            })
+        );
     }
 
 
