@@ -22,23 +22,22 @@ library Breeding {
             });
         }
 
-        int result_level = (_this.level() + _with.level()) / 2;
         return Result({
             pupper: new Doggo(
                 nickname,
                 nickname
             ).initialize(
                 (_this.maxHp() + _with.maxHp()) / 2,
-                result_level,
+                1,
                 0,
-                _this.neededExpForLevel(result_level),
+                _this.neededExpForLevel(2),
                 (
                     Utils.random() % 2 == 0
                         ? Doggo.Gender.M
                         : Doggo.Gender.F
                 ),
                 maxStats(_this.bases(), _with.bases()),
-                maxStats(_this.evs(), _with.evs()),
+                Doggo.Stats({attack:0,defense:0,spAttack:0,spDefense:0,speed:0}),
                 maxStats(_this.ivs(), _with.ivs())
             ),
             success: true
